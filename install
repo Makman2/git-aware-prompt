@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+# The profile where the git-aware-prompt is installed.
+target_profile="$HOME/.bashrc"
+# The identification line-text used to check whether git-aware-prompt was
+# already installed. Means when this line occurs inside the profile, don't
+# install again and just warn the user.
+identification="# git-aware-prompt"
+
+
+# Check for identification.
+profile_contents=$(cat $target_profile)
+if [[ $profile_contents == *"$identification"* ]]; then
+  echo "git-aware-prompt is already installed."
+  exit
+fi
+
+# Process install_content.
+MODE="SIMPLE"
+
+install_content=$(cat install_content)
+install_content=${install_content/\{MODE\}/$MODE}
+
+# Write to profile.
+printf "\n$identification\n$install_content" >> $target_profile
+
+echo "Installed git-aware-prompt successfully into $target_profile."
