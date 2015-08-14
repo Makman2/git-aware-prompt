@@ -1,2 +1,3 @@
 source "${GITAWAREPROMPT}/colors.sh"
-source "${GITAWAREPROMPT}/prompt.sh"
+source "${GITAWAREPROMPT}/git_aware.sh"
+source "${GITAWAREPROMPT}/setPS1.sh"
