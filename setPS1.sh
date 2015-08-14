@@ -1,5 +1,11 @@
-PS1_prefix="\${debian_chroot:+(\$debian_chroot)}\u@\h:\w"
+OS=$(uname -s)
+if [ "$OS" == "Linux" ]; then
+  PS1_prefix="\${debian_chroot:+(\$debian_chroot)}\u@\h:\w"
+else
+  PS1_prefix="\u@\h \w"
+fi
 PS1_postfix="\$"
+
 
 update_git_PS1() {
   # Don't forget to wrap colors or any other non-printed strings in \\[ and \\]!
