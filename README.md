@@ -23,6 +23,10 @@ directory, your prompt works like normal.
 
 ![Git Branch in Prompt](https://raw.github.com/jimeh/git-aware-prompt/master/preview.png)
 
+git-aware-prompt contains an "extended" mode, that displays more information.
+
+![Extended Branch in Prompt](preview-extended.png)
+
 
 ## Installation
 
@@ -34,12 +38,15 @@ cd ~/.bash
 git clone git://github.com/jimeh/git-aware-prompt.git
 ```
 
-Edit your `~/.bash_profile` or `~/.profile` and add the following to the top:
+And just install it:
 
 ```bash
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source "${GITAWAREPROMPT}/main.sh"
+cd git-aware-prompt
+./install
 ```
+
+This install git-aware-prompt only in *SIMPLE* mode. If you want to use
+*EXTENDED* mode, see **Configuring** below.
 
 
 ## Configuring
@@ -50,45 +57,37 @@ color helper variables which you can see a list of in [colors.sh][].
 
 [colors.sh]: https://github.com/jimeh/git-aware-prompt/blob/master/colors.sh
 
+git-aware-prompt implements an *EXTENDED* mode. Setting *EXTENDED* mode from
+install script is currently not supported and needs to be done manually. To do
+so go to `~/.bashrc` and change `GITAWAREPROMPT_MODE` to `EXTENDED`.
+
+Other exported variables are (used from *EXTENDED* mode):
+
+- `$git_unstaged_added_files`
+  The number of new files not staged.
+- `$git_unstaged_changed_files`
+  The number of files where changes are unstaged.
+- `$git_unstaged_removed_files`
+  The number of removed files unstaged.
+- `$git_staged_added_files`
+  The number of new files staged.
+- `$git_staged_changed_files`
+  The number of files where changes are staged.
+- `$git_staged_removed_files`
+  The number of removed files staged.
+- `$git_renamed_files`
+  The number of renamed files.
+
 If you want to know more about how to customize your prompt, I recommend
 this article: [How to: Change / Setup bash custom prompt (PS1)][how-to]
 
 [how-to]: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 
 
-### Suggested Prompts
+### Implement your own git-aware-prompt
 
-Below are a few suggested prompt configurations. Simply paste the code at the
-end of the same file you pasted the installation code into earlier.
-
-
-#### Mac OS X
-
-```bash
-export PS1="\u@\h \w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
-```
-
-Optionally, if you want a nice pretty prompt when using `sudo -s`, also add
-this line:
-
-```bash
-export SUDO_PS1="\[$bakred\]\u@\h\[$txtrst\] \w\$ "
-```
-
-
-#### Ubuntu
-
-Standard:
-
-```bash
-export PS1="\${debian_chroot:+(\$debian_chroot)}\u@\h:\w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
-```
-
-Colorized:
-
-```bash
-export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
-```
+If you want to modify the prompt, look at `setPS1.sh` inside the
+`update_git_PS1` function. There you can customize `PS1` like you need.
 
 
 ## Updating
